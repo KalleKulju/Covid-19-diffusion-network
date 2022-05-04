@@ -2,17 +2,20 @@ import networkx as nx
 import ndlib.models.CompositeModel as gc
 import ndlib.models.ModelConfig as mc
 import ndlib.models.compartments as cpm
-#from ndlib.viz.mpl.DiffusionTrend import DiffusionTrend
-from bokeh.io import output_notebook, show
+# from ndlib.viz.mpl.DiffusionTrend import DiffusionTrend
+from bokeh.io import show
+from bokeh.models import Range1d
 from ndlib.viz.bokeh.DiffusionTrend import DiffusionTrend
 from ndlib.viz.bokeh.MultiPlot import MultiPlot
 import numpy as np
 
 # Network Definition
-g = nx.erdos_renyi_graph(5500, 0.001)
+population = 5500000
+scaling = 0.001
+g = nx.erdos_renyi_graph(int(population * scaling), 0.001)
 
-infection_rates = np.linspace(0.001, 0.01, 3)
-death_rates = np.linspace(0.0001, 0.001, 3)
+infection_rates = np.linspace(0.021, 0.023, 3)  # 0.021
+death_rates = np.linspace(0.0021, 0.0023, 3)    # 0.0023
 
 vm = MultiPlot()
 iteration = 0
@@ -41,7 +44,7 @@ for p in infection_rates:
 
         # Model initial status configuration
         config = mc.Configuration()
-        config.add_model_parameter('fraction_infected', 0.005)
+        config.add_model_parameter('fraction_infected', 0.0000005 / scaling)
         config.add_model_parameter('p', p)
         config.add_model_parameter('q', q)
         model.set_initial_status(config)
@@ -53,6 +56,11 @@ for p in infection_rates:
         # Create plot
         viz = DiffusionTrend(model, trends)
         pl = viz.plot()
+        pl.y_range = Range1d(0, 0.00005 / scaling)
+        pl.yaxis.ticker = np.linspace(0.0, 0.00005 / scaling, 6)
+        pl.xaxis.axis_label = "Weeks"
+        pl.yaxis.axis_label = "Number of deaths per week"
+        pl.yaxis.major_label_overrides = {i: '{}'.format(round(i * population * scaling)) for i in pl.yaxis.ticker.ticks}
         vm.add_plot(pl)
 
 m = vm.plot()
