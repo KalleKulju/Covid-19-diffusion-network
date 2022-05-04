@@ -59,14 +59,23 @@ for week in range(len(infection_amounts) + 1):
         sum += int(infection_amounts[x])
     weekly_recovered_combined.append(sum)
 
-print(weekly_recovered_combined)
-plt.plot(infection_amounts)
-plt.plot(recovered_amounts)
+plt.xlabel("Week")
+plt.ylabel("Amount")
+plt.plot(weekly_infections_combined, label="Infected")
+plt.plot(weekly_recovered_combined, label="Recovered")
+plt.legend()
+plt.show()
+
+plt.xlabel("Week")
+plt.ylabel("Amount")
+plt.plot(infection_amounts, label="Infected")
+plt.plot(recovered_amounts, label="Recovered")
+plt.legend()
 plt.show()
 
 #death amounts
 
-
+print(death_amounts)
 weekly_dead_combined = []
 
 for week in range(len(death_amounts) + 1):
@@ -76,5 +85,14 @@ for week in range(len(death_amounts) + 1):
     weekly_dead_combined.append(sum)
 
 print(weekly_dead_combined)
-plt.plot(death_amounts)
+plt.xlabel("Week")
+plt.ylabel("Amount")
+plt.plot(weekly_dead_combined, label="Deaths")
+plt.legend()
+plt.show()
+
+plt.xlabel("Week")
+plt.ylabel("Amount")
+plt.plot(death_amounts, label="Deaths")
+plt.legend()
 plt.show()
