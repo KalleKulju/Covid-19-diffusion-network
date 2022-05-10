@@ -22,4 +22,4 @@ model = SEIRSNetworkModel(G       = g,
 model.run(T=120)
 
 # Visualization
-model.figure_infections(plot_percentages=False, plot_E=False)
+model.figure_infections(plot_percentages=False, plot_E=False, title=f"Sigma: {round(SIGMA, 2)}, Gamma: {GAMMA}, R0: {R0}")
