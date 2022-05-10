@@ -1,5 +1,4 @@
 import networkx as nx
-import numpy as np
 from seirsplus.models import *
 from seirsplus.networks import *
 
@@ -17,10 +16,10 @@ model = SEIRSNetworkModel(G       = g,
                           beta    = BETA,
                           sigma   = SIGMA,
                           gamma   = GAMMA,
-                          initI   = network_size*scaling/100)
+                          initI   = network_size*0.000005)
 
 # Simulation
 model.run(T=120)
 
 # Visualization
-model.figure_infections(plot_percentages=False)
+model.figure_infections(plot_percentages=False, plot_E=False)
