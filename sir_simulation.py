@@ -38,7 +38,6 @@ if __name__ == "__main__":
 
     for i in range(int(iterations_amount / 4)):
         iter = model.iteration()
-        iter["node_count"][2] += recovered_so_far
         iterations.append(iter)
     
     recovered_so_far += iterations[-1]["node_count"][2]
@@ -54,7 +53,6 @@ if __name__ == "__main__":
 
     for i in range(int(iterations_amount / 4)):
         iter = model.iteration()
-        iter["node_count"][2] += recovered_so_far
         iterations.append(iter)
     
     recovered_so_far += iterations[-1]["node_count"][2]
@@ -64,13 +62,12 @@ if __name__ == "__main__":
     model = ep.SIRModel(g)
     cfg = mc.Configuration()
     cfg.add_model_parameter('beta', 0.3)
-    cfg.add_model_parameter('gamma', 0.06)
+    cfg.add_model_parameter('gamma', 0.1)
     cfg.add_model_parameter("fraction_infected", new_fraction)
     model.set_initial_status(cfg)
 
     for i in range(int(iterations_amount / 4)):
         iter = model.iteration()
-        iter["node_count"][2] += recovered_so_far
         iterations.append(iter)
 
     # Get number of infected and recovered nodes for each iteration
@@ -80,9 +77,10 @@ if __name__ == "__main__":
 
     recovered = []
     for iter in iterations:
-        recovered.append(iter["node_count"][2])
+        recovered.append(iter["status_delta"][2])
     
     plt.plot(infected, label="Infected")
+    plt.plot(recovered, label="Recovered")
     #plt.plot(recovered, label="Recovered")
     plt.legend()
     plt.show()
