@@ -8,9 +8,9 @@ network_size = 5500000
 scaling = 0.001
 g = nx.erdos_renyi_graph(int(network_size * scaling), 0.001)
 
-sigma_values = np.linspace(0.07, 0.08, 2)   # 0.11
-gamma_values = np.linspace(0.11, 0.12, 2)    # 0.1
-r0_values = np.linspace(3.6, 3.7, 2)        # 3.6
+sigma_values = np.linspace(0.15, 0.25, 3)   # 0.15
+gamma_values = np.linspace(0.08, 0.1, 3)    # 0.09
+r0_values = np.linspace(1.75, 1.85, 3)        # 1.85
 
 iteration = 0
 for SIGMA in sigma_values:
